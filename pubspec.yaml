@@ -1,21 +1,71 @@
 name: chopper
-description: "A new Flutter project."
+description: "Gestão de Medicamentos"
 publish_to: 'none'
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
-  sdk: ^3.12.2
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
-    sdk: flutter    
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.3
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.5
+  freezed_annotation: ^3.1.0
+  get_it: ^9.3.0
+  injectable: ^2.5.0
+  go_router: ^18.0.2
+  dio: ^5.5.0+1
+  pretty_dio_logger: ^1.4.0
+  dio_cache_interceptor: ^4.0.7
+  graphql_flutter: ^5.1.2
+  graphql: ^5.1.2
+  drift: ^2.18.0
+  sqlite3_flutter_libs: ^0.6.0+eol
+  firebase_core: ^4.15.0
+  firebase_auth: ^6.7.0
+  firebase_crashlytics: ^5.4.0
+  firebase_analytics: ^12.6.0
+  firebase_performance: ^0.11.6
+  flutter_local_notifications: ^23.0.0-dev.3
+  timezone: ^0.11.1
+  workmanager: ^0.10.10
+  permission_handler: ^13.0.2
+  path: ^1.9.0
+  path_provider: ^2.1.3
+  share_plus: ^13.3.1
+  url_launcher: ^6.2.6
+  fl_chart: ^1.2.0
+  pdf: ^3.10.7
+  printing: ^5.12.0
+  google_fonts: ^9.0.0
   font_awesome_flutter: ^11.0.0
-  google_fonts: ^6.1.0
-  
+  cached_network_image: ^4.0.4
+  dartz: ^0.10.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  build_runner: ^2.4.9
+  freezed: ^3.2.3
+  injectable_generator: ^2.6.2
+  drift_dev: ^2.18.0
+  graphql_codegen: ^3.0.0
+  json_serializable: ^6.8.0
+  custom_lint: ^0.8.1
+  mocktail: ^1.0.4
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/dev/
+    - assets/icons/staging/
+    - assets/icons/prod/
+    - assets/sounds/
