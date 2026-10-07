@@ -1,32 +1,25 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'core/config/environment.dart';
 
 void main() {
-  runApp(const MainApp());
+  Environment.name = 'dev';
+  runApp(const Chopper());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class Chopper extends StatelessWidget {
+  const Chopper({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Chopper',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: GoogleFonts.nunito().fontFamily,
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.light,
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'Chopper',
+    theme: ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+    ),
+    home: const Scaffold(
+      body: Center(
+        child: Text('Chopper App'),
       ),
-      darkTheme: ThemeData( 
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.system,
-      home: const LoginScreen(),
-    );
-  }
+    ),
+  );
 }
