@@ -1,18 +1,18 @@
 # Chopper — Gestão de Remédios (Flutter Full-Cycle)
 
-[![CI](https://github.com/Rysgothal/chopper/actions/workflows/ci.yml/badge.svg)](https://github.com/Rysgothal/chopper/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)](https://github.com/Rysgothal/chopper/actions)
 [![Flutter](https://img.shields.io/badge/Flutter-3.24+-blue)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.5+-blue)](https://dart.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **Projeto** demonstrando competências em Flutter: Clean Architecture, BLoC, testes automatizados, CI/CD mobile (Fastlane), observabilidade (Crashlytics), offline-first, GraphQL, acessibilidade e performance.
+> **Projeto pessoal** de gestão de medicamentos (offline-first, multi-dispositivo) para demonstrar competências em Flutter: Clean Architecture, BLoC, testes automatizados, CI/CD mobile, observabilidade, offline-first, GraphQL, acessibilidade e performance.
 
 ---
 
 ## 🎯 Objetivo do Projeto
 
-Aplicação mobile para **gestão completa de medicamentos**: cadastro, agendamento, notificações inteligentes, histórico de adesão, relatórios para compartilhamento médico, sincronização multi-dispositivo e modo offline-first. Escopo desenhado para exercitar **todos os pilares técnicos valorizados pelo mercado**.
+Aplicação mobile para **gestão completa de medicamentos**: cadastro, agendamento, notificações inteligentes, histórico de adesão, relatórios para compartilhamento médico, sincronização multi-dispositivo e modo offline-first.
+
+**Estado atual:** Em desenvolvimento ativo — fundação pronta, features em implementação.
 
 ---
 
@@ -51,8 +51,8 @@ graph TD
     end
 ```
 
-**Decisões-chave (ADRs leves):**
-- **Clean Architecture (feature-first):** isolamento de domínio, testabilidade, troca de implementação (ex.: REST ↔ GraphQL) sem tocar UI.
+**Decisões-chave (ADRs em `docs/adr/`):**
+- **Clean Architecture (feature-first):** isolamento de domínio, testabilidade, troca de implementação (REST ↔ GraphQL) sem tocar UI.
 - **BLoC + Freezed:** estado imutável, sealed classes, exhaustiveness checking, fácil mock em testes.
 - **GetIt + Injectable (codegen):** DI compile-time, zero reflection, setup simples em testes.
 - **Drift (SQLite):** type-safe, migrações versionadas, streams reativas, offline-first nativo.
@@ -65,15 +65,15 @@ graph TD
 
 | Tipo | Ferramenta | Cobertura Alvo | Status |
 |------|------------|----------------|--------|
-| Unitários | `flutter_test`, `mocktail` | >85% (blocs, use cases, repositories) | ✅ |
-| Widget | `flutter_test` | Telas críticas (login, home, cadastro, detalhes) | ✅ |
-| Integração | `integration_test` + `patrol` (opcional) | Fluxos E2E: login → sync → notificação → relatório | 🚧 |
-| Estático | `flutter analyze` (regras estritas), `dart format` | Zero warnings/errors | ✅ |
-| Convencional | Commits semânticos (`feat:`, `fix:`, `test:`, `ci:`, `refactor:`) | 100% | ✅ |
+| Unitários | `flutter_test`, `mocktail` | >85% (blocs, use cases, repositories) | 🚧 Em andamento |
+| Widget | `flutter_test` | Telas críticas (login, home, cadastro, detalhes) | ⏳ Planejado |
+| Integração | `integration_test` + `patrol` (opcional) | Fluxos E2E: login → sync → notificação → relatório | ⏳ Planejado |
+| Estático | `flutter analyze` (regras estritas), `dart format` | Zero warnings/errors | ✅ **Passando** |
+| Convencional | Commits semânticos (`feat:`, `fix:`, `test:`, `ci:`, `refactor:`) | 100% | ✅ **Aplicado** |
 
 **Executar localmente:**
 ```bash
-# Unit + Widget
+# Unit + Widget (quando existirem)
 flutter test --coverage
 genhtml coverage/lcov.info -o coverage/html
 
@@ -83,10 +83,10 @@ flutter test integration_test/app_test.dart
 
 ---
 
-## ⚙️ CI/CD Mobile (GitHub Actions + Fastlane)
+## ⚙️ CI/CD Mobile (GitHub Actions + Fastlane) — **Planejado**
 
 ```yaml
-# .github/workflows/ci.yml (resumo)
+# .github/workflows/ci.yml (planejado)
 jobs:
   analyze-test:
     runs-on: ubuntu-latest
@@ -125,39 +125,53 @@ jobs:
           path: build/ios/ipa/app-release.ipa
 ```
 
-**Fastlane (`fastlane/Fastfile`):**
+**Fastlane (`fastlane/Fastfile`) — *a implementar*:**
 - `match` para certificados/provisioning (iOS)
 - `increment_version_code` / `increment_build_number`
 - `build_android_app` / `build_ios_app`
-- `upload_to_play_store` / `upload_to_app_store` (opcional, apenas internal testing)
+- `upload_to_play_store` / `upload_to_app_store` (internal testing)
 
 ---
 
-## 📊 Observabilidade
+## 📊 Observabilidade — *Planejado*
 
-| Ferramenta | Uso no Projeto |
-|------------|----------------|
-| **Firebase Crashlytics** | Captura de crashes não-tratados + logs customizados; alerta se crash-free users < 99.5% |
-| **Firebase Analytics** | Eventos: `login_success`, `medication_created`, `notification_opened`, `sync_completed`, `report_shared` |
+| Ferramenta | Uso Previsto no Projeto |
+|------------|-------------------------|
+| **Firebase Crashlytics** | Captura de crashes não-tratados + logs customizados; custom keys (`user_id`, `flavor`, `version`) |
+| **Firebase Analytics** | Eventos: `login_success`, `medication_created`, `medication_taken`, `notification_fired`, `sync_completed`, `report_shared` |
 | **Firebase Performance** | Traces custom: `api_latency`, `db_query_time`, `notification_schedule_time` |
 | **DevTools (local)** | Profile mode: frame raster < 16ms, memory leak detection, shader compilation jank |
 
 ---
 
-## 📱 Funcionalidades Implementadas / Em Progresso
+## 📱 Funcionalidades — **Status Real**
 
-| Feature | Status | Detalhes Técnicos |
-|---------|--------|-------------------|
-| Auth (Email/Google/Apple) | ✅ | Firebase Auth + BLoC + persistência de sessão |
-| Onboarding + Permissões | ✅ | `permission_handler`, notificações, exact alarms |
-| CRUD Medicamentos | ✅ | Drift (SQLite) + Repository + Use Cases + BLoC |
-| Agendamento Notificações | ✅ | `flutter_local_notifications` + `timezone` + `workmanager` (background) |
-| Offline-first + Sync | 🚧 | Drift + `workmanager` periodic sync + conflict resolution (last-write-wins + server-wins) |
-| Histórico de Adesão | 🚧 | Streams reativas Drift + gráficos (fl_chart) |
-| Relatórios PDF/Compartilhamento | ⏳ | `pdf` + `printing` + `share_plus` |
-| GraphQL (busca remédios) | ✅ | `graphql_flutter` + codegen + cache normalizado |
-| Acessibilidade (WCAG 2.1 AA) | ✅ | Semântica, contraste, TalkBack/VoiceOver testado |
-| Design System (Tokens/Componentes) | ✅ | Cores, espaçamento, tipografia, `ThemeExtension`, componentes reutilizáveis |
+| Feature | Status | Detalhes |
+|---------|--------|----------|
+| **Fundação (Config, Lints, Flavors, DI, Environment)** | ✅ **Concluído** | `pubspec.yaml`, `analysis_options.yaml`, `flutter_flavors.yaml`, GetIt/Injectable, Environment config |
+| **Clean Architecture Structure** | ✅ **Concluído** | `core/` + `features/` skeleton, pastas `domain/data/presentation` |
+| **Auth Domain** | ✅ **Concluído** | `User` entity, `AuthFailure` hierarchy, `AuthRepository` contract, 4 UseCases (SignInEmail, SignInGoogle, SignOut, GetCurrentUser) |
+| **Auth Data (Firebase)** | 🚧 **Em andamento** | `FirebaseAuthDataSource`, `AuthRepositoryImpl`, mappers, DI registration |
+| **Auth Presentation (BLoC, Pages)** | ⏳ Planejado | `AuthBloc`, `LoginPage`, `OnboardingPermissionsPage` |
+| **GoRouter + Auth Guards** | ⏳ Planejado | Rotas, guards, deep linking placeholder |
+| **Firebase Config (Auth, Crashlytics, Analytics, Performance)** | ⏳ Planejado | Projetos por flavor, `google-services.json`, `GoogleService-Info.plist` |
+| **Design System (Tokens, ThemeExtension, Componentes)** | ⏳ Planejado | Cores, espaçamento, tipografia, `ThemeExtension`, `AppButton`, `AppInput`, `AppCard` |
+| **Drift Database v1 (Schema, DAOs, Migrations)** | ⏳ Planejado | Users, Medications, Doses, SyncQueue (outbox), DAOs com streams |
+| **Medication Domain (Entity, Repository, UseCases)** | ⏳ Planejado | CRUD + Search (GraphQL placeholder) |
+| **Medication Data (Drift + Outbox)** | ⏳ Planejado | LocalDataSource, RepositoryImpl, outbox queue |
+| **Medication Presentation (BLoC, Pages)** | ⏳ Planejado | List, Form, Detail com a11y |
+| **Notificações Locais + Exact Alarms** | ⏳ Planejado | `flutter_local_notifications`, `timezone`, actions (Tomar/Pular/Adiar) |
+| **Workmanager (Sync + Boot Strap)** | ⏳ Planejado | Sync periódico 15min, boot strap, fallback exact alarm |
+| **Sync Engine (Outbox Processor)** | ⏳ Planejado | FIFO, retry exponencial, conflict resolution |
+| **GraphQL Feature (Busca Medicamentos)** | ⏳ Planejado | `graphql_flutter` + codegen + cache normalizado + fallback offline |
+| **Adesão Dashboard** | ⏳ Planejado | Métricas, gráficos `fl_chart`, estado vazio |
+| **Relatórios PDF** | ⏳ Planejado | `pdf` + `printing` + `share_plus` |
+| **Observabilidade (Crashlytics, Analytics, Performance)** | ⏳ Planejado | Instrumentação completa |
+| **Acessibilidade WCAG 2.1 AA** | ⏳ Planejado | Semântica, contraste 4.5:1, touch targets 48dp, TalkBack/VoiceOver |
+| **CI/CD GitHub Actions + Fastlane** | ⏳ Planejado | Analyze → Test → Build Android/iOS → Artifacts |
+| **ADRs + Documentação** | ✅ **Concluído** | 15 ADRs, Requisitos, Backlog, DoD |
+
+**Legenda:** ✅ Concluído | 🚧 Em andamento | ⏳ Planejado
 
 ---
 
@@ -168,26 +182,21 @@ jobs:
 - Flutter SDK 3.24+ (channel stable)
 - Dart 3.5+
 - Android Studio / Xcode (para emuladores)
-- Firebase CLI (`npm i -g firebase-tools`) + projeto Firebase configurado
-- Ruby + Bundler + Fastlane (para builds de release)
+- Firebase CLI (`npm i -g firebase-tools`) + projetos Firebase (dev, staging, prod) — *a configurar*
+- Ruby + Bundler + Fastlane (para builds de release) — *a configurar*
 
 # Setup
 git clone https://github.com/Rysgothal/chopper.git
 cd chopper
 flutter pub get
-dart run build_runner build --delete-conflicting-outputs  # codegen (injectable, freezed, graphql)
-cp .env.example .env  # preencha chaves Firebase, API base URL, etc.
+dart run build_runner build --delete-conflicting-outputs  # codegen (injectable, freezed, graphql, drift)
 
-# Debug
-flutter run --flavor development --target lib/main_development.dart
+# Debug (entry point único temporário)
+flutter run
 
 # Testes
-flutter test --coverage
-flutter test integration_test/app_test.dart
-
-# Build Release (local)
-fastlane android build
-fastlane ios build
+flutter analyze          # ✅ Deve passar (0 issues)
+flutter test --coverage  # Quando testes existirem
 ```
 
 ---
@@ -200,11 +209,11 @@ lib/
 │   ├── config/           # env, theme, router, di (get_it)
 │   ├── errors/           # failures, exceptions
 │   ├── utils/            # extensions, constants, helpers
-│   └── widgets/          # design system (tokens, buttons, inputs, cards)
+│   └── design/           # design system (tokens, theme_extension, widgets)
 ├── features/
 │   ├── auth/
 │   │   ├── data/         # datasources, repositories impl, models
-│   │   ├── domain/       # entities, repositories (contracts), usecases
+│   │   ├── domain/       # ✅ entities, repositories (contracts), usecases
 │   │   └── presentation/ # bloc, pages, widgets
 │   ├── medication/
 │   │   ├── data/
@@ -212,7 +221,7 @@ lib/
 │   │   └── presentation/
 │   ├── notification/
 │   │   ├── data/
-│   ├── domain/
+│   │   ├── domain/
 │   │   └── presentation/
 │   ├── sync/
 │   │   ├── data/
@@ -223,7 +232,7 @@ lib/
 │       ├── domain/
 │       └── presentation/
 ├── injection.dart        # get_it setup (generated by injectable)
-└── main.dart             # entry point + flavor config
+└── main.dart             # entry point temporário (dev)
 ```
 
 ---
@@ -245,23 +254,27 @@ lib/
 
 ## 📈 Métricas de Qualidade (Atuais)
 
-- **Cobertura de testes:** 87% (unit + widget)
-- **flutter analyze:** 0 warnings, 0 errors
-- **Tamanho APK (release):** ~18 MB (arm64)
-- **Cold start (profile mode):** < 800ms em dispositivo médio
-- **Frame raster (scroll lista 100 itens):** < 12ms (60fps estável)
-- **Crash-free users (simulado):** 100% (nenhum crash em testes E2E)
+- **flutter analyze:** ✅ 0 warnings, 0 errors
+- **Commits semânticos:** ✅ 100% (Conventional Commits)
+- **Documentação:** ✅ 15 ADRs, Requisitos, Backlog, DoD
+- **Estrutura base:** ✅ Clean Architecture feature-first montada
+
+*Outras métricas (cobertura, APK size, cold start, frame raster) serão medidas quando features estiverem implementadas.*
 
 ---
 
-## 🗺️ Roadmap Próximas Semanas
+## 🗺️ Próximos Passos (Foco Atual)
 
-- [ ] Concluir sincronização bidirecional com resolução de conflitos
-- [ ] Implementar relatórios PDF + compartilhamento médico
-- [ ] Adicionar testes de integração completos (`patrol` para iOS/Android)
-- [ ] Configurar `flutter_flavorizr` para 3 flavors (dev, staging, prod)
-- [ ] Publicar no Firebase App Distribution (internal testing)
-- [ ] Documentar ADRs completos em `docs/adr/`
+1. **Auth Data Layer** — `AuthRepositoryImpl` + `FirebaseAuthDataSource` + mappers + DI
+2. **Auth Presentation** — `AuthBloc` + `LoginPage` + `OnboardingPermissionsPage`
+3. **GoRouter + Auth Guards** — Rotas protegidas, redirecionamento
+4. **Firebase Config** — Projetos por flavor, `google-services.json`, `GoogleService-Info.plist`
+5. **Design System** — Tokens, `ThemeExtension`, componentes base (`AppButton`, `AppInput`, `AppCard`)
+6. **Drift Database v1** — Schema, DAOs, migrations, outbox queue
+7. **Medication Domain + Data** — CRUD offline-first + outbox
+8. **Notificações + Workmanager** — Exact alarms, sync periódico, boot strap
+9. **GraphQL (Busca)** — Codegen, cache normalizado, fallback offline
+10. **CI/CD + Fastlane** — Pipeline completa com artifacts
 
 ---
 
