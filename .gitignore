@@ -39,6 +39,8 @@ flutter_*.png
 *.swo
 *~
 .DS_Store
+.flutter-plugins-dependencies
+.flutter-plugins
 Thumbs.db
 ehthumbs.db
 Desktop.ini
