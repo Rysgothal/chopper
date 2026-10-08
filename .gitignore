@@ -1,75 +1,64 @@
-# Miscellaneous
-*.class
+.dart_tool
+.packages
+build
+*.dart_tool
+*.packages
+flutter_*.png
+*.lock
 *.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# Environment files - SECRETS (never commit)
-.env
-.env.*
-!.env.example
-!.env.sample
-
-# IntelliJ related
+*.pot
+*.class
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+*.img
+*.apk
+*.aab
+*.ipa
+*.mobileprovision
+*.p12
+*.cer
+*.keystore
+*.jks
+*.properties
+*.gradle
 *.iml
 *.ipr
 *.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-/coverage/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# VS Code (optional - uncomment if you don't want to share launch configs)
-#.vscode/
-#*.code-workspace
-
-# Flutter/Dart additional
-.packages
-packages/
-*.dart_tool/
-
-# IDE / Editor
+.idea
+.vscode
 *.swp
 *.swo
 *~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.local
+*.local.properties
+firebase_options_*.dart
+google-services.json
+GoogleService-Info.plist
+flutter_flavors.yaml
+.env
+.env.local
+.env.*.local
+coverage
+coverage_html
+lcov.info
+*.prof
+*.gcno
+*.gcda
+.gcda
+.gcno
+.DartAnalysisServer
+packages
+pubspec.lock
