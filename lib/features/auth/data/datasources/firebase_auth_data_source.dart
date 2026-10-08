@@ -7,13 +7,10 @@ class FirebaseAuthDataSource {
 
   FirebaseAuthDataSource(this._firebaseAuth);
 
-  /// Stream de mudanças de estado de autenticação
   Stream<fb.User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  /// Usuário atual (síncrono)
   fb.User? get currentUser => _firebaseAuth.currentUser;
 
-  /// Login com e-mail e senha
   Future<fb.UserCredential> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -23,16 +20,13 @@ class FirebaseAuthDataSource {
         password: password,
       );
 
-  /// Login com Google
   Future<fb.UserCredential> signInWithGoogle() async {
     final fb.GoogleAuthProvider provider = fb.GoogleAuthProvider();
     return _firebaseAuth.signInWithProvider(provider);
   }
 
-  /// Logout
   Future<void> signOut() => _firebaseAuth.signOut();
 
-  /// Excluir conta
   Future<void> deleteAccount() async {
     final fb.User? user = _firebaseAuth.currentUser;
     if (user != null) {

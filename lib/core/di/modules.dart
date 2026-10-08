@@ -13,10 +13,7 @@ final getIt = GetIt.instance;
   asExtension: false,
 )
 Future<void> configureDependencies() async {
-  // Firebase Core deve ser inicializado antes
   await Firebase.initializeApp();
-
-  // Inicializa código gerado pelo injectable
   await init(getIt);
 }
 

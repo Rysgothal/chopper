@@ -8,6 +8,22 @@ abstract class AuthFailure extends Equatable {
   List<Object?> get props => [message];
 }
 
+class NetworkRequestFailure extends AuthFailure {
+  const NetworkRequestFailure() : super('Falha ao se comunicar com o servidor. Verifique sua conexão.');
+}
+
+class InvalidEmailFailure extends AuthFailure {
+  const InvalidEmailFailure() : super('E-mail inválido.');
+}
+
+class WrongPasswordFailure extends AuthFailure {
+  const WrongPasswordFailure() : super('Senha incorreta.');
+}
+
+class UserDisabledFailure extends AuthFailure {
+  const UserDisabledFailure() : super('Conta desativada.');
+}
+
 class InvalidCredentialsFailure extends AuthFailure {
   const InvalidCredentialsFailure() : super('Credenciais inválidas.');
 }

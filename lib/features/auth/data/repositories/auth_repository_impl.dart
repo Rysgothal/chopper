@@ -89,10 +89,13 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthFailure _mapFirebaseAuthException(fb.FirebaseAuthException e) {
     switch (e.code) {
       case 'invalid-credential':
-      case 'wrong-password':
-      case 'invalid-email':
-      case 'user-disabled':
         return const InvalidCredentialsFailure();
+      case 'wrong-password':
+        return const WrongPasswordFailure();
+      case 'invalid-email':
+        return const InvalidEmailFailure();
+      case 'user-disabled':
+        return const UserDisabledFailure();
       case 'user-not-found':
         return const UserNotFoundFailure();
       case 'email-already-in-use':
@@ -100,6 +103,7 @@ class AuthRepositoryImpl implements AuthRepository {
       case 'weak-password':
         return const WeakPasswordFailure();
       case 'network-request-failed':
+        return const NetworkFailure();
       case 'timeout':
         return const NetworkFailure();
       default:
