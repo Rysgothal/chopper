@@ -2,7 +2,9 @@ import '/features/auth/domain/repositories/auth_repository.dart';
 import '/features/auth/domain/failures/auth_failure.dart';
 import '/features/auth/domain/entities/user.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class SignInEmailUseCase {
   final AuthRepository _repository;
   SignInEmailUseCase(this._repository);
