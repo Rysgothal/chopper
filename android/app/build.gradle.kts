@@ -6,12 +6,14 @@ plugins {
 
 android {
     namespace = "com.example.chopper"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 37
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // Core library desugaring required by flutter_local_notifications
+        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
@@ -19,10 +21,12 @@ android {
         applicationId = "com.example.chopper"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 37
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Core library desugaring
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -42,4 +46,9 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Core library desugaring required by flutter_local_notifications (min 2.1.4)
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
